@@ -111,6 +111,9 @@ func validateSessionCookieDomains(config *schema.Session, validator *schema.Stru
 func validateSessionDomainName(i int, config *schema.Session, validator *schema.StructValidator) {
 	var d = config.Cookies[i]
 
+	if d.Domain == "localhost" {
+		return
+	}
 	switch {
 	case d.Domain == "":
 		validator.Push(fmt.Errorf(errFmtSessionDomainOptionRequired, sessionDomainDescriptor(i, d), attrSessionDomain))

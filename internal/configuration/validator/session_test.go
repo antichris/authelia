@@ -843,6 +843,7 @@ func TestShouldRaiseErrorWhenDomainIsInvalid(t *testing.T) {
 		expected []string
 	}{
 		{"ShouldNotRaiseErrorOnValidDomain", exampleDotCom, nil, nil},
+		{"ShouldNotRaiseErrorOnLocalhost", "localhost", nil, nil},
 		{"ShouldNotRaiseErrorOnValidIPLocalHost1", "127.0.0.1", nil, nil},
 		{"ShouldNotRaiseErrorOnValidIPLocalHost30", "127.0.0.30", nil, nil},
 		{"ShouldNotRaiseErrorOnValidIPClassC40", "192.168.0.40", nil, nil},
@@ -852,7 +853,7 @@ func TestShouldRaiseErrorWhenDomainIsInvalid(t *testing.T) {
 		{"ShouldNotRaiseErrorOnSingleLetterDomain", "a.b.c", nil, nil},
 		{"ShouldNotRaiseErrorOnDomainWithHyphen", "example-domain.com", nil, nil},
 		{"ShouldRaiseErrorOnDomainWithInvalidHyphen", "example-.com", nil, []string{"session: domain config #1 (domain 'example-.com'): option 'domain' does not appear to be a valid cookie domain or an ip address"}},
-		{"ShouldRaiseErrorOnDomainWithoutDots", "localhost", nil, []string{"session: domain config #1 (domain 'localhost'): option 'domain' is not a valid cookie domain: must have at least a single period or be an ip address"}},
+		{"ShouldRaiseErrorOnDomainWithoutDots", "not-localhost", nil, []string{"session: domain config #1 (domain 'not-localhost'): option 'domain' is not a valid cookie domain: must have at least a single period or be an ip address"}},
 		{"ShouldRaiseErrorOnPublicDomainDuckDNS", "duckdns.org", nil, []string{"session: domain config #1 (domain 'duckdns.org'): option 'domain' is not a valid cookie domain: the domain is part of the special public suffix list"}},
 		{"ShouldNotRaiseErrorOnSuffixOfPublicDomainDuckDNS", "example.duckdns.org", nil, nil},
 		{"ShouldRaiseWarningOnDomainWithLeadingDot", ".example.com", []string{"session: domain config #1 (domain '.example.com'): option 'domain' has a prefix of '.' which is not supported or intended behavior: you can use this at your own risk but we recommend removing it"}, nil},
